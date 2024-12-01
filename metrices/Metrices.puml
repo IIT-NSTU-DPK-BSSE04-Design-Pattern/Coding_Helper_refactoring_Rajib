@@ -1,0 +1,23 @@
+@startuml
+
+class Average_LOC {
+    +void totalClass(String path)
+}
+
+class FileCount {
+    +int classCount(String path)
+}
+
+class LineOfCode {
+    +static double totalLineOfProject
+    +int countLines(String filename)
+}
+
+class MethodCount {
+    +void getTotalMethods(String projectPath, String ProjectName)
+}
+
+Average_LOC --> LineOfCode : uses
+MethodCount --> LineOfCode : uses
+
+@enduml
