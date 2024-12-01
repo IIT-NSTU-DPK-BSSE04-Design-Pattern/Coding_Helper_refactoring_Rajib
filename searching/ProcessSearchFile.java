@@ -12,25 +12,18 @@ import java.util.stream.Collectors;
 
 public class ProcessSearchFile {
 
-    public void processMethod(String filename, String fileContent, String filepath, String processfilePath) throws IOException {
-        String currentpath = Command.currentPath;
-        String current = currentpath.replaceAll("\\\\", "-").replace(":", "");//location of current file
-        String stemWord = "";
-        PreProcessing ob = new PreProcessing();
-        String removePuncuation = ob.removePunctuation(fileContent);
-        String methodWithoutKey = ob.removeKeyword(removePuncuation);
-        String methodWithoutSpace = ob.removeSpace(methodWithoutKey);
-        String breakWork = breakWord(methodWithoutSpace);
-        Porter_stemmer stemmer = new Porter_stemmer();
-        String[] words = breakWork.split(" ");
-        for (String word : words) {
-            String stem = stemmer.stemWord(word);
-            stemWord = stemWord + " " + stem;
-        }
-        Filewriter writer = new Filewriter(); //fileWriter class objeect
-        writer.createProcessFile(filename, stemWord.trim(), processfilePath);
+    Public void processMethod(String filename, String fileContent, String filepath, String processfilePath) throws IOException {
+        String preprocessedContent = preprocessContent(fileContent);
+        String stemmedContent = stemWords(preprocessedContent);
+        writeToFile(filename, stemmedContent, processfilePath);
     }
-
+    private String preprocessContent(String content) {
+        PreProcessing preProcessor = new PreProcessing();
+        String removePuncuation = preProcessor.removePunctuation(content);
+        String methodWithoutKey = preProcessor.removeKeyword(removePuncuation);
+        String methodWithoutSpace = preProcessor.removeSpace(methodWithoutKey);
+        return breakWord(methodWithoutSpace);
+    }
     public String queryProcess(String query) throws IOException {
         String stemWord = "";
         PreProcessing ob = new PreProcessing();
