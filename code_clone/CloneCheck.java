@@ -37,39 +37,6 @@ public class CloneCheck {
         ProjectReader.getFileList(projectTwo, Pathname2, ProjectFileName2);
 
     }
-
-    /*   public void getFileList1(String project1) {
-
-        String currentpath = Command.currentPath;
-        String current = currentpath.replaceAll("\\\\", "-").replace(":", "");//location of current file
-        String Pathname1 = "H:\\coding_helper" + "\\ProcessFile$" + current + "-" + project1;
-        File folder = new File(Pathname1);
-        File[] listOfFiles = folder.listFiles();
-        for (int i = 0; i < listOfFiles.length; i++) {
-            if (listOfFiles[i].toString().endsWith(".txt")) {
-                //  String newFilename = listOfFiles[i].getName().replaceAll(".{3}$", "java");
-                ProjectFileName1.add(listOfFiles[i].getName().replaceAll(".{3}$", "java"));
-            }
-        }
-
-    }
-
-    public void getFileList2(String project2) {
-
-        String currentpath = Command.currentPath;
-        String current = currentpath.replaceAll("\\\\", "-").replace(":", "");//location of current file
-        String Pathname2 = "H:\\coding_helper" + "\\ProcessFile$" + current + "-" + project2;
-        File folder = new File(Pathname2);
-        File[] listOfFiles = folder.listFiles();
-        for (int i = 0; i < listOfFiles.length; i++) {
-            if (listOfFiles[i].toString().endsWith(".txt")) {
-                //  String newFilename = listOfFiles[i].getName().replaceAll(".{3}$", "java");
-                ProjectFileName2.add(listOfFiles[i].getName().replaceAll(".{3}$", "java"));
-            }
-        }
-
-    }
-     */
     public void Code_clone(String project1, String project2) throws IOException {
         String Pathname1 = pathGenerate(project1);  //H:\2-1\project\ProcessAllFiles\ProcessFile$H-new
         String Pathname2 = pathGenerate(project2);
