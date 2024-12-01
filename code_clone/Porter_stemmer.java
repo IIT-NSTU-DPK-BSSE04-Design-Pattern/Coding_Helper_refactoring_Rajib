@@ -20,19 +20,15 @@ public class Porter_stemmer {
     }
 
     String stemStep1a(String input) {
-        // SSES -> SS
         if (input.endsWith("sses")) {
             return input.substring(0, input.length() - 2);
         }
-        // IES  -> I
         if (input.endsWith("ies")) {
             return input.substring(0, input.length() - 2);
         }
-        // SS   -> SS
         if (input.endsWith("ss")) {
             return input;
         }
-        // S    ->
         if (input.endsWith("s")) {
             return input.substring(0, input.length() - 1);
         }
@@ -40,7 +36,6 @@ public class Porter_stemmer {
     }
 
     String stemStep1b(String input) {
-        // (m>0) EED -> EEd agreed
         if (input.endsWith("eed")) {
             String stem = input.substring(0, input.length() - 1);
             String letterTypes = getLetterTypes(stem);
@@ -48,7 +43,6 @@ public class Porter_stemmer {
             if (m > 0) return stem;
             return input;
         }
-        // (*v*) ED  ->
         if (input.endsWith("ed")) {
             String stem = input.substring(0, input.length() - 2);
             String letterTypes = getLetterTypes(stem);
@@ -57,7 +51,6 @@ public class Porter_stemmer {
             }
             return input;
         }
-        // (*v*) ING ->
         if (input.endsWith("ing")) {
             String stem = input.substring(0, input.length() - 3);
             String letterTypes = getLetterTypes(stem);
@@ -70,20 +63,15 @@ public class Porter_stemmer {
     }
 
     private String step1b2(String input) {
-        // AT -> ATE
         if (input.endsWith("at")) {
             return input + "e";
         }
-        // BL -> BLE
         else if (input.endsWith("bl")) {
             return input + "e";
         }
-        // IZ -> IZE
         else if (input.endsWith("iz")) {
             return input + "e";
         } else {
-            // (*d and not (*L or *S or *Z))
-            // -> single letter
             char lastDoubleConsonant = getLastDoubleConsonant(input);
             if (lastDoubleConsonant != 0 &&
                     lastDoubleConsonant != 'l'
@@ -91,7 +79,6 @@ public class Porter_stemmer {
                     && lastDoubleConsonant != 'z') {
                 return input.substring(0, input.length() - 1);
             }
-            // (m=1 and *o) -> E
             else {
                 String letterTypes = getLetterTypes(input);
                 int m = getM(letterTypes);
@@ -120,7 +107,7 @@ public class Porter_stemmer {
                 "enci",
                 "anci",
                 "izer",
-                "bli", // the published algorithm specifies abli instead of bli.
+                "bli",
                 "alli",
                 "entli",
                 "eli",
@@ -135,7 +122,7 @@ public class Porter_stemmer {
                 "aliti",
                 "iviti",
                 "biliti",
-                "logi", // the published algorithm doesn't contain this
+                "logi",
         };
         String[] s2 = new String[]{
                 "ate",
@@ -143,7 +130,7 @@ public class Porter_stemmer {
                 "ence",
                 "ance",
                 "ize",
-                "ble", // the published algorithm specifies able instead of ble
+                "ble",
                 "al",
                 "ent",
                 "e",
@@ -158,10 +145,9 @@ public class Porter_stemmer {
                 "al",
                 "ive",
                 "ble",
-                "log" // the published algorithm doesn't contain this
+                "log"
         };
-        // (m>0) ATIONAL ->  ATE
-        // (m>0) TIONAL  ->  TION
+
         for (int i = 0; i < s1.length; i++) {
             if (input.endsWith(s1[i])) {
                 String stem = input.substring(0, input.length() - s1[i].length());
@@ -193,8 +179,6 @@ public class Porter_stemmer {
                 "",
                 "",
         };
-        // (m>0) ICATE ->  IC
-        // (m>0) ATIVE ->
         for (int i = 0; i < s1.length; i++) {
             if (input.endsWith(s1[i])) {
                 String stem = input.substring(0, input.length() - s1[i].length());
@@ -230,8 +214,6 @@ public class Porter_stemmer {
                 "ive",
                 "ize",
         };
-        // (m>1) AL    ->
-        // (m>1) ANCE  ->
         for(String suffix : suffixes) {
             if (input.endsWith(suffix)) {
                 String stem = input.substring(0, input.length() - suffix.length());
@@ -257,11 +239,9 @@ public class Porter_stemmer {
             String stem = input.substring(0, input.length() - 1);
             String letterTypes = getLetterTypes(stem);
             int m = getM(letterTypes);
-            // (m>1) E     ->
             if (m > 1) {
                 return stem;
             }
-            // (m=1 and not *o) E ->
             if (m == 1 && !isStarO(stem)) {
                 return stem;
             }
@@ -270,7 +250,6 @@ public class Porter_stemmer {
     }
 
     String stemStep5b(String input) {
-        // (m > 1 and *d and *L) -> single letter
         String letterTypes = getLetterTypes(input);
         int m = getM(letterTypes);
         if (m > 1 && input.endsWith("ll")) {
@@ -288,9 +267,6 @@ public class Porter_stemmer {
         }
         return 0;
     }
-
-    // *o  - the stem ends cvc, where the second c is not W, X or Y (e.g.
-    //                                                              -WIL, -HOP)
     private boolean isStarO(String input) {
         if (input.length() < 3) return false;
 
