@@ -1,0 +1,65 @@
+@startuml
+
+class GrepContent {
+    +String findBetweenBraces(int start, String fileContent)
+    +int getLineNumber(String word, String file, int preLine)
+}
+
+class MethodFind {
+    +void getMethod(String filename, String fileContent, String path, String processfilePath)
+    +void getConstructor(String filename, String fileContent, String path, String processfilePath)
+    -void pracessContent(String filename, String content, String path, String processfilePath, String pattern, int groupIndex)
+}
+
+class ProcessSearchFile {
+    +void processMethod(String filename, String fileContent, String filepath, String processfilePath)
+    +String queryProcess(String query)
+    +String breakWord(String fileAsString)
+    -String preprocessContent(String content)
+}
+
+class Search {
+    +static ArrayList<String> ProjectFileName
+    +static void ProjectRead(String Projectpath, String processfilePath)
+    +void processProject(String projectpath, String Projectname)
+    +String getProcessFilepath(String projectname)
+    +void getProjectFile(String projectname)
+    +void getFile(String projectPath, String fileName)
+    +void SearchingResult(String query, String projectPath)
+}
+
+class Similarity {
+    +static HashMap<String, Double> SortDescending
+    +void getCosine()
+    +void getResult()
+}
+
+class TfIdfCalculate {
+    +ArrayList<String> allterms
+    +ArrayList<String> FileWord
+    +ArrayList<String[]> FilesWords
+    +HashMap<String, Double> idfmap
+    +static ArrayList<String> queryTerms
+    +static ArrayList<double[]> queryTfIdfVector
+    +static ArrayList<double[]> tfidfvectorProject
+    +void fileRead(String path)
+    +void Idfcal()
+    +void UniqueQueryTerms(String processQuery)
+    +void ProjectTfIdfCal()
+    +void queryTfIdfCal(String processQuery)
+}
+
+GrepContent --> MethodFind : uses
+MethodFind --> GrepContent : uses
+MethodFind --> ProcessSearchFile : uses
+ProcessSearchFile --> GrepContent : uses
+ProcessSearchFile --> PreProcessing : uses
+ProcessSearchFile --> Porter_stemmer : uses
+Search --> MethodFind : uses
+Search --> ProcessSearchFile : uses
+Search --> TfIdfCalculate : uses
+Similarity --> CosineSimilarity : uses
+Similarity --> TfIdfCalculate : uses
+TfIdfCalculate --> getTfIdf : uses
+
+@enduml
