@@ -1,0 +1,77 @@
+@startuml
+
+class BoxAndWhiskerChart {
+    +ChartPanel chartPanel
+    +JScrollPane scrollPane
+    +List<Double> getInputData(double[] l)
+    +void display()
+    +static void BoxWhisker()
+}
+
+class CloneCheck {
+    +static ArrayList<String> ProjectFileName1
+    +static ArrayList<String> ProjectFileName2
+    +static String path1
+    +static String path2
+    +String pathGenerate(String projectName)
+    +void getFileListforProject1(String projectOne)
+    +void getFileListforProject2(String projectTwo)
+    +void Code_clone(String project1, String project2)
+}
+
+class CosineSimilarity {
+    +static ArrayList<double[]> similarArray
+    +void getCosinesimilarity()
+    +double cosineSimilarity(double[] project1, double[] project2)
+}
+
+class getTfIdf {
+    +double getTf(String[] fileContent, String term)
+    +double getIdf(List allFile, String term)
+}
+
+class Porter_stemmer {
+    +String stemWord(String word)
+}
+
+class PreProcessing {
+    +String ProcessFile(String filename, String content, String p)
+    +String removePunctuation(String p)
+    +String removeSpace(String fileAsString)
+    +String removeKeyword(String fileAsString)
+}
+
+class TfIdfCalculate {
+    +ArrayList<String[]> FileWordProject1
+    +ArrayList<String[]> FileWordProject2
+    +static ArrayList<double[]> tfidfvectorProject1
+    +static ArrayList<double[]> tfidfvectorProject2
+    +ArrayList<String> processProjectFile
+    +ArrayList<String> combineTerms
+    +HashMap<String, Double> idfmap
+    +ArrayList<String> allterms1
+    +ArrayList<String> allterms2
+    +String[] fileRead(String path)
+    +void getUniqueWordProject1(String path1)
+    +void getUniqueWordProject2(String path2)
+    +void IdfCal()
+    +void tfIdfVectorProject1()
+    +void tfIdfVectorProject2()
+}
+
+BoxAndWhiskerChart --> CosineSimilarity : uses
+BoxAndWhiskerChart --> CloneCheck : uses
+CloneCheck --> ProjectReader : uses
+CloneCheck --> PreProcessing : uses
+CloneCheck --> TfIdfCalculate : uses
+CloneCheck --> CosineSimilarity : uses
+CosineSimilarity --> TfIdfCalculate : uses
+CosineSimilarity --> CloneCheck : uses
+getTfIdf --> TfIdfCalculate : uses
+Porter_stemmer --> PreProcessing : uses
+PreProcessing --> Porter_stemmer : uses
+PreProcessing --> Filewriter : uses
+TfIdfCalculate --> getTfIdf : uses
+TfIdfCalculate --> CloneCheck : uses
+
+@enduml
